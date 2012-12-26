@@ -6,7 +6,7 @@ This is a Ruby script for MacOS X to set the Terminal background color based on 
 To install, you'll need to alias your 'ssh' command to this script. Install the script somewhere on your computer.  For example:
 
 	mv color_ssh.rb /usr/local/bin/color_ssh.rb
-	chmod +x color_ssh.rb
+	chmod +x /usr/local/bin/color_ssh.rb
 
 Then place this line in your ~/.profile in your home folder:
 
