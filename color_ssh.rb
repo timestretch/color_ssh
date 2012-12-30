@@ -54,26 +54,23 @@ class RandomColor
 end
 
 remote_host = ARGV[0]
-hostname = remote_host
-if remote_host.match(/(.*?)\@(.*?)$/)
-	hostname = $2
-end
+hostname = remote_host[/(?:.*?)\@(.*?)$/,1] || remote_host
 
 theme = theme_map[hostname]
 if theme
-	system("echo \"tell application \\\"Terminal\\\" to set current settings of selected tab of window 1 to (first settings set whose name is \\\"#{theme}\\\")\" | osascript")
+	system(%(echo "tell application \\"Terminal\\" to set current settings of selected tab of window 1 to (first settings set whose name is \\"#{theme}\\")" | osascript"))
 else
 	color_maker = RandomColor.new(hostname)
 	(red, green, blue) = USE_LIGHT_COLORS ? color_maker.light_color : color_maker.dark_color
 	applescript_color = "{ #{red}, #{green}, #{blue} }"
-	system("echo \"tell application \\\"Terminal\\\" to set background color of window 1 to #{applescript_color}\" | osascript")
+	system(%(echo "tell application \\"Terminal\\" to set background color of window 1 to #{applescript_color}" | osascript))
 end
 
 cmd = "ssh #{remote_host}"
 system(cmd)
 
 # Set the theme back to the default theme.
-system("echo \"tell application \\\"Terminal\\\" to set current settings of selected tab of window 1 to (first settings set whose name is \\\"#{DEFAULT_THEME}\\\")\" | osascript")
+system(%(echo "tell application \\"Terminal\\" to set current settings of selected tab of window 1 to (first settings set whose name is \\"#{DEFAULT_THEME}\\")" | osascript))
 
 # Applescript from:
 # http://serverfault.com/questions/130436/how-can-i-automatically-change-terminal-colors-when-i-ssh-a-server
