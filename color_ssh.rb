@@ -58,7 +58,7 @@ hostname = remote_host[/(?:.*?)\@(.*?)$/,1] || remote_host
 
 theme = theme_map[hostname]
 if theme
-	system(%(echo "tell application \\"Terminal\\" to set current settings of selected tab of window 1 to (first settings set whose name is \\"#{theme}\\")" | osascript"))
+	system(%(echo "tell application \\"Terminal\\" to set current settings of selected tab of window 1 to (first settings set whose name is \\"#{theme}\\")" | osascript))
 else
 	color_maker = RandomColor.new(hostname)
 	(red, green, blue) = USE_LIGHT_COLORS ? color_maker.light_color : color_maker.dark_color
